@@ -12,7 +12,8 @@ class Team1Agent:
         pass
 
     def get_action(self, observation, action_space):
-        """gets an action from the agent that should be performed based on the agent's internal state and provided observation and action space"""
+        """gets an action from the agent that should be performed based on the agent's internal state and provided
+        observation and action space"""
         if self.model is None:
             path = str(inspect.getfile(CybORG))
             path = path[:-10] + '/Shared/Scenarios/Scenario2.yaml'

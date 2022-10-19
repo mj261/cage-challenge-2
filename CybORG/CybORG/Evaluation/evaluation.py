@@ -5,7 +5,7 @@ from statistics import mean, stdev
 
 from CybORG import CybORG, CYBORG_VERSION
 from CybORG.Agents import B_lineAgent, SleepAgent
-from Team1Agent import Team1Agent
+from CybORG.Team1Agent import Team1Agent
 from CybORG.Agents.SimpleAgents.Meander import RedMeanderAgent
 from CybORG.Agents.Wrappers import ChallengeWrapper
 
@@ -16,8 +16,10 @@ agent_name = 'Team1Agent'
 def wrap(env):
     return ChallengeWrapper(env=env, agent_name='Blue')
 
+
 def get_git_revision_hash() -> str:
     return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip()
+
 
 if __name__ == "__main__":
     cyborg_version = CYBORG_VERSION
@@ -38,7 +40,8 @@ if __name__ == "__main__":
 
     print(f'Using agent {agent.__class__.__name__}, if this is incorrect please update the code to load in your agent')
 
-    file_name = str(inspect.getfile(CybORG))[:-10] + '/Evaluation/' + time.strftime("%Y%m%d_%H%M%S") + f'_{agent.__class__.__name__}.txt'
+    file_name = str(inspect.getfile(CybORG))[:-10] + '/Evaluation/' + time.strftime(
+        "%Y%m%d_%H%M%S") + f'_{agent.__class__.__name__}.txt'
     print(f'Saving evaluation results to {file_name}')
     with open(file_name, 'a+') as data:
         data.write(f'CybORG v{cyborg_version}, {scenario}, Commit Hash: {commit_hash}\n')
@@ -78,8 +81,12 @@ if __name__ == "__main__":
                 actions.append(a)
                 # observation = cyborg.reset().observation
                 observation = wrapped_cyborg.reset()
-            print(f'Average reward for red agent {red_agent.__name__} and steps {num_steps} is: {mean(total_reward)} with a standard deviation of {stdev(total_reward)}')
+            print(
+                f'Average reward for red agent {red_agent.__name__} and steps {num_steps} is: {mean(total_reward)} '
+                f'with a standard deviation of {stdev(total_reward)}')
             with open(file_name, 'a+') as data:
-                data.write(f'steps: {num_steps}, adversary: {red_agent.__name__}, mean: {mean(total_reward)}, standard deviation {stdev(total_reward)}\n')
+                data.write(
+                    f'steps: {num_steps}, adversary: {red_agent.__name__}, mean: {mean(total_reward)}, '
+                    f'standard deviation {stdev(total_reward)}\n')
                 for act, sum_rew in zip(actions, total_reward):
                     data.write(f'actions: {act}, total reward: {sum_rew}\n')
