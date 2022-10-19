@@ -7,25 +7,22 @@ from CybORG import CybORG
 
 class Team1Agent:
 
-    def train(self, results: Results):
-        """allows an agent to learn a policy"""
-        pass
+    def train(self, env):
+        self.model = PPO('MlpPolicy', env)
+        self.model.learn(total_timesteps=2000)
+        self.model.save("Team1")
+        return self.model
 
     def get_action(self, observation, action_space):
-        """gets an action from the agent that should be performed based on the agent's internal state and provided
-        observation and action space"""
         if self.model is None:
             path = str(inspect.getfile(CybORG))
             path = path[:-10] + '/Shared/Scenarios/Scenario2.yaml'
             cyborg = ChallengeWrapper(env=CybORG(path, 'sim'), agent_name='Blue')
-            self.model = PPO('MlpPolicy', cyborg)
-            self.model.learn(total_timesteps=2000)
-            self.model.save("Team1")
+            self.model = self.train(cyborg)
         action, _states = self.model.predict(observation)
         return action
 
     def end_episode(self):
-        """Allows an agent to update its internal state"""
         pass
 
     def set_initial_values(self, action_space, observation):
