@@ -1,5 +1,4 @@
 import inspect
-from CybORG.Shared import Results
 from stable_baselines3 import PPO
 from CybORG.Agents.Wrappers import ChallengeWrapper
 from CybORG import CybORG
