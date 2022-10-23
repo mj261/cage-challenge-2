@@ -10,6 +10,8 @@ from CybORG.Agents.SimpleAgents.Meander import RedMeanderAgent
 from CybORG.Agents.Wrappers import ChallengeWrapper
 
 MAX_EPS = 100
+
+# Add Team 1 Agent
 agent_name = 'Team1Agent'
 
 
