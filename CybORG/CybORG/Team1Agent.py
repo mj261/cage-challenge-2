@@ -3,7 +3,7 @@
 
 
 import inspect
-from stable_baselines3 import PPO
+from stable_baselines3 import A2C
 from CybORG.Agents.Wrappers import ChallengeWrapper
 from CybORG import CybORG
 
@@ -14,7 +14,7 @@ class Team1Agent:
     # Function to train the agent
     def train(self, env):
         # Utilize stable_baselines3 PPO MLP Policy
-        self.model = PPO('MlpPolicy', env)
+        self.model = A2C('MlpPolicy', env)
         # Train agent over 2000 timesteps
         self.model.learn(total_timesteps=2000)
         # Save Model named "Team1"
@@ -49,6 +49,6 @@ class Team1Agent:
     def __init__(self, model_file: str = None):
         # If model does not exist, create one
         if model_file is not None:
-            self.model = PPO.load(model_file)
+            self.model = A2C.load(model_file)
         else:
             self.model = None
